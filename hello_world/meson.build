@@ -1,0 +1,27 @@
+project('hello_world', 'c')
+
+sources = []
+inc     = []
+
+subdir( 'driver' )
+
+add_project_arguments('-march=rv32imc', language: 'c')
+linker_script1 = join_paths(meson.current_source_dir(), 'ld/esp32c3.ld')
+linker_script2 = join_paths(meson.current_source_dir(), 'ld/common.ld')
+linker_script3 = join_paths(meson.current_source_dir(), 'ld/romfuncs.ld')
+
+add_project_link_arguments('-T', linker_script1 ,'-T', linker_script2 ,'-T', linker_script3 ,'-march=rv32imc', '--specs=nano.specs', '--specs=nosys.specs', '-nostartfiles', language: 'c')
+
+sources += files('hello_world.c')
+sources += files('start.S')
+sources += files('syscalls.c')
+sources += files('vectors.S')
+
+executable('hello_world', sources, include_directories:[inc])
+
+maindump = custom_target(
+                        'bin',
+      capture          : true,
+      output           : ['main.bin'],
+      command          : [objcopy, '-O', 'binary', 'hello_world', 'main.bin'],
+      depends          : [main])

@@ -1,0 +1,17 @@
+[binaries]
+cross_pass = '/home/zhaofujin/esp/xpack-riscv-none-embed-gcc-10.1.0-1.1/bin/riscv-none-embed-' 
+c = cross_pass + 'gcc'
+cpp = cross_pass + 'g++'
+ar = cross_pass + 'ar'
+strip = cross_pass + 'strip'
+objcopy = cross_pass + 'objcopy'
+
+[properties]
+objcopy = 'riscv-none-embed-objcopy'
+needs_exe_wrapper = true
+
+[host_machine]
+system = 'bare metal'
+cpu_family = 'riscv32'
+cpu = 'esp32c3'
+endian = 'little'
