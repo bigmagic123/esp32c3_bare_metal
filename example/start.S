@@ -49,8 +49,6 @@ _start:
     call    atexit                  #  to be called upon exit
     call    __libc_init_array       # Run global initialization functions
 
-    call    syscalls_init
-
     /* Call main */
     la      a0, _main_argc
     lw      a0, 0(a0)

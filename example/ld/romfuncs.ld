@@ -174,3 +174,6 @@ strtol = 0x40000454;
 strtoul = 0x40000458;
 
 uart_tx_one_char = 0x40000068;
+uart_rx_one_char = 0x40000070;
+uart_rx_one_char_block = 0x40000074;
+uart_tx_flush = 0x40000080;

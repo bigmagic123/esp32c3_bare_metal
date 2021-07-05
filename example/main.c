@@ -1,5 +1,22 @@
 #include <stdio.h>
 #include <wdt.h>
+#include <stdbool.h>
+
+#define OK 1
+
+extern int uart_tx_one_char(uint8_t c);
+extern void uart_tx_flush(uint8_t uart_no);
+extern unsigned char uart_rx_one_char(unsigned char *ch);
+
+ssize_t _write(int fildes, const void *buf, size_t nbyte)
+{
+    const uint8_t *cbuf = (const uint8_t *) buf;
+    for (size_t i = 0; i < nbyte; ++i) {
+        uart_tx_one_char(cbuf[i]);
+        uart_tx_flush(0);
+    }
+    return nbyte;
+}
 
 static inline void nop(volatile unsigned long count) {
   while (count--) asm volatile("nop");
@@ -17,7 +34,6 @@ static inline unsigned long time_us(void)
 
 static inline void delay_us(unsigned long us) 
 {
-  us = us * 1000;
   unsigned long until = time_us() + us;  // Handler counter wrap
   while (time_us() < until) nop(1);
 }
@@ -37,15 +53,19 @@ void time_init(void)
 
 int main(void)
 {
-    int cnt = 0;
+    unsigned char state;
+    unsigned char ch;
     wdt_disable();
     printf("build timer: %s %s\n", __DATE__, __TIME__);
     time_init();
     while(1)
     {
-        cnt = cnt + 1;
-        printf("cur tick is %d!\n", cnt);
-        delay_us(1000);
+      state = uart_rx_one_char(&ch);
+      if(state != OK)
+      {
+        uart_tx_one_char(ch);
+      }
+      delay_us(1000);
     }
     return 0;
 }

@@ -14,7 +14,6 @@ add_project_link_arguments('-T', linker_script1 ,'-T', linker_script2 ,'-T', lin
 
 sources += files('main.c')
 sources += files('start.S')
-sources += files('syscalls.c')
 sources += files('vectors.S')
 
 exe = executable('example', sources, include_directories:[inc])
