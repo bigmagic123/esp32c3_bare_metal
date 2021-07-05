@@ -177,3 +177,26 @@ uart_tx_one_char = 0x40000068;
 uart_rx_one_char = 0x40000070;
 uart_rx_one_char_block = 0x40000074;
 uart_tx_flush = 0x40000080;
+
+/***************************************
+ Group gpio
+ ***************************************/
+
+/* Functions */
+gpio_input_get = 0x4000059c;
+gpio_matrix_in = 0x400005a0;
+gpio_matrix_out = 0x400005a4;
+gpio_output_disable = 0x400005a8;
+gpio_output_enable = 0x400005ac;
+gpio_output_set = 0x400005b0;
+gpio_pad_hold = 0x400005b4;
+gpio_pad_input_disable = 0x400005b8;
+gpio_pad_input_enable = 0x400005bc;
+gpio_pad_pulldown = 0x400005c0;
+gpio_pad_pullup = 0x400005c4;
+gpio_pad_select_gpio = 0x400005c8;
+gpio_pad_set_drv = 0x400005cc;
+gpio_pad_unhold = 0x400005d0;
+gpio_pin_wakeup_disable = 0x400005d4;
+gpio_pin_wakeup_enable = 0x400005d8;
+gpio_bypass_matrix_in = 0x400005dc;
