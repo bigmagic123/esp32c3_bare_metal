@@ -1,4 +1,4 @@
-project('hello_world', 'c')
+project('example', 'c')
 
 sources = []
 inc     = []
@@ -12,17 +12,17 @@ linker_script3 = join_paths(meson.current_source_dir(), 'ld/romfuncs.ld')
 
 add_project_link_arguments('-T', linker_script1 ,'-T', linker_script2 ,'-T', linker_script3 ,'-march=rv32imc', '--specs=nano.specs', '--specs=nosys.specs', '-nostartfiles', language: 'c')
 
-sources += files('hello_world.c')
+sources += files('main.c')
 sources += files('start.S')
 sources += files('syscalls.c')
 sources += files('vectors.S')
 
-exe = executable('hello_world', sources, include_directories:[inc])
+exe = executable('example', sources, include_directories:[inc])
 
-hex = custom_target('main.bin',
+hex = custom_target('demo.bin',
   build_by_default: true,
   input : exe,
-  output : 'main.bin',
+  output : 'demo.bin',
   command : [meson.get_external_property('objcopy'), '-O', 'binary','@INPUT@','@OUTPUT@'],
 )
 

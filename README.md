@@ -34,7 +34,7 @@ pip install esptool
 then
 
 ```
-esptool.py --port COM3 --baud 921600 write_flash 0x0000 main.bin
+esptool.py --port COM3 --baud 921600 write_flash 0x0000 demo.bin
 python -m serial.tools.miniterm COM3 115200
 ```
 exit you can
