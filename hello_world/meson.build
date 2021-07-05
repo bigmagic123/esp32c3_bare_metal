@@ -17,11 +17,12 @@ sources += files('start.S')
 sources += files('syscalls.c')
 sources += files('vectors.S')
 
-executable('hello_world', sources, include_directories:[inc])
+exe = executable('hello_world', sources, include_directories:[inc])
 
-maindump = custom_target(
-                        'bin',
-      capture          : true,
-      output           : ['main.bin'],
-      command          : [objcopy, '-O', 'binary', 'hello_world', 'main.bin'],
-      depends          : [main])
+hex = custom_target('main.bin',
+  build_by_default: true,
+  input : exe,
+  output : 'main.bin',
+  command : [meson.get_external_property('objcopy'), '-O', 'binary','@INPUT@','@OUTPUT@'],
+)
+
